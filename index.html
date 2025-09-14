@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Govt DBT Awareness Portal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+ <style>
+     
+:root {
+  --bg-color: #f4f4f4;
+  --text-color: #fa06e6;
+  --nav-bg: #006699;
+  --footer-bg: #001f3f;
+  --button-bg: #0055aa;
+  --button-hover: #0077ff;
+  --section-bg: #97969b;
+  --section-text: #000;
+  --news-gradient: linear-gradient(90deg, #006699, #0099cc);
+  --chat-body-bg: #f9f9f9;
+  --heading-bg: var(--section-bg);
+}
+
+/* Dark mode variables remain unchanged */
+
+body.dark {
+  --bg-color: #080724;
+  --text-color: #e2e6ebcc;
+  --header-bg: #111;
+  --nav-bg: #222;
+  --footer-bg: #111;
+  --button-bg: #0066cc;
+  --button-hover: #0ad0f3;
+  --section-bg: #1d18184d;
+  --section-text: #f3ebeb;
+  --news-gradient: linear-gradient(90deg, #111, #444);
+  --chat-body-bg: #3a2ab6;
+  --heading-bg: #6f16aa;
+}
+
+/* Body background change: remove image, set light blue */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  /* Updated background: solid light blue */
+  background-color: #add8e6; /* Light Blue */
+  /* Removed background image and related properties */
+  color: var(--section-text);
+  transition: background 0.3s, color 0.3s;
+  display: flex;
+  opacity: 0.7;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Rest of your styles remain unchanged */
+
+#newsTicker {
+  width: 100%;
+  background: #003366;
+  padding: 10px;
+  color: red;
+  top: 120px;
+  z-index: 10;
+  font-weight: bold;
+  font-size: 1.1em;
+  box-sizing: border-box;
+}
+#newsTicker span {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scroll 30s linear infinite;
+}
+@keyframes scroll { 100% { transform: translateX(-100%); } }
+
+header {
+  background: var(--header-bg);
+  padding: 10px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+.logo-section { display: flex; align-items: center; gap: 10px; }
+.logo-section img { height: 50px; border-radius: 55px; transition: transform 0.3s; }
+.logo-section img:hover { transform: scale(1.1); }
+h1 { margin: 0 0 0 20px; font-family: 'Arial Black', sans-serif; color: #fff; }
+#menuToggle { display: none; cursor: pointer; font-size: 1.5em; color: #fff; }
+
+nav {
+  background: var(--nav-bg);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8px 20px;
+  gap: 10px;
+  justify-content: center;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+nav a:hover { background: #005577; }
+@media(max-width:768px) {
+  #menuToggle { display: block; }
+  nav { display: none; flex-direction: column; }
+  nav.show { display: flex; }
+}
+
+.main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 120px auto 150px auto;
+  flex: 1;
+}
+section {
+  background: var(--section-bg);
+  color: var(--section-text);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+h2 { margin-top: 0; }
+h3 { margin: 20px 0 10px; color: #006699; }
+button {
+  background: var(--button-bg);
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  font-size: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+button:hover { background: var(--button-hover); }
+
+footer {
+  background:#003366;
+  color: #eee;
+  font-size: 14px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.footer-column { flex: 1 1 200px; margin: 5px 15px; }
+.footer-column h3 { margin: 0 0 8px; font-size: 15px; color: #fff; }
+.footer-column p,.footer-column a { margin: 3px 0; display: block; }
+.footer-column a { color: rgb(220,214,214); }
+.footer-column a:hover { color: yellow; }
+footer > p {
+  flex-basis: 100%;
+  text-align: center;
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: #999;
+}
+
+Rest of your styles ... (unchanged)
+
+/* /* #whatsappBtn,#chatbotBtn { */
+  position: fixed;
+  bottom: 20px;
+  z-index: 1000;
+  border-radius: 50%;
+  width: 60px; height: 60px;
+  display: flex;
+  justify-content: center; align-items: center;
+  font-size: 1.5em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+#whatsappBtn { right: 20px; background: #25D366; }
+#chatbotBtn { right: 90px; background: #4CAF50; }
+#whatsappBtn:hover,#chatbotBtn:hover { opacity: 0.9; }
+
+.chat-window {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 350px;
+  max-height: 500px;
+  background: #000102;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+.chat-header {
+  background: #006699;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 0.9em;
+  background-color: var(--chat-body-bg);
+}
+.chat-input {
+  border: none;
+  border-top: 1px solid #ccc;
+  padding: 8px;
+  width: 100%;
+  font-size: 1em;
+}
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+} */
+
+/* Additional styles for header and animated text */
+
+  /* Top heading: "Government of India - DBT Portal" */
+  .top-heading {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  /* Container for banner and menu icon */
+  .banner-container {
+    position: relative;
+    overflow: hidden;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* WhatsApp & Chatbot Buttons (Fixed at Bottom-Right) */
+#whatsappBtn, 
+#chatbotBtn {
+  position: fixed;
+  bottom: 20px;
+  z-index: 1000;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  font-size: 1.5em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: opacity 0.3s;
+  color: white;
+}
+
+#whatsappBtn {
+  right: 20px;
+  background: #25D366; /* WhatsApp green */
+}
+
+#chatbotBtn {
+  right: 90px;
+  background: #4CAF50; /* Chatbot green */
+}
+
+#whatsappBtn:hover,
+#chatbotBtn:hover {
+  opacity: 0.9;
+}
+
+
+  /* Animated "DBT AWARENESS" text with faster speed */
+  .scroll-text {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 20px;
+    font-weight: bold;
+    color: yellow;
+    animation: scroll-left 10s linear infinite; /* faster animation */
+  }
+
+  @keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* Three-line menu icon on left */
+  .menu-icon {
+    position: absolute;
+    top: 10px;
+    left: 20px; /* left side */
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    z-index: 1001;
+  }
+
+  /* Dropdown menu styling - clear and visible */
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    background-color: #fff;
+    min-width: 220px;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  }
+
+  .dropdown a {
+    display: block;
+    padding: 10px 15px;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #ccc;
+  }
+  .dropdown a:hover {
+    background-color: #eee;
+  }
+
+  /* Heading for user groups */
+  .user-heading {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  /* Styles for user sections */
+  .user-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .card {
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+    background: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+  }
+
+  /* Icon styles */
+  .icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .icon:hover {
+    transform: scale(1.2);
+    color: #fff;
+  }
+
+  /* Role-specific background colors */
+  .student { background-color: #4CAF50; }
+  .teacher { background-color: #2196F3; }
+  .parents { background-color: #FF9800; }
+  .admin { background-color: #E91E63; }
+
+  /* Buttons for user sections */
+  button {
+    padding: 12px 24px;
+    font-size: 1.2em;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  /* Button colors for roles */
+  .btn-student { background-color: #81C784; color: #fff; }
+  .btn-teacher { background-color: #64B5F6; color: #fff; }
+  .btn-parents { background-color: #FFB74D; color: #fff; }
+  .btn-admin { background-color: #F06292; color: #fff; }
+
+  button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+
+  .lang{
+    font-size: 0.8em;
+    padding: 10px 10px;
+    margin: 2px;
+
+  }
+
+  /* Main content styling */
+  #mainContent {
+    margin-top: 40px;
+    padding: 20px;
+    color: white;
+    background: #003366;
+    border-radius: 10px;
+  }
+  #mainContent h2{
+    color: red;
+  }
+</style>
+</head>
+<body>
+
+<div id="bgSlideshow"></div>
+<div id="newsTicker"><span id="newsText">Welcome to the Government DBT Portal | <a href="https://www.india.gov.in/" target="_blank" style="color:#fff; text-decoration:underline;">More updates!</a></span></div>
+
+<header>
+  <div class="logo-section">
+    <a href="https://india.gov.in/" target="_blank"><img src="./Satyamev.jpg" alt="Gov India" /></a>
+    <a href="https://dbtbharat.gov.in/" target="_blank"><img src="./dbt.jpg" alt="DBT Logo" /></a>
+  </div>
+  <h1>Government of India - DBT Portal</h1>
+  <div style="display:flex; align-items:center;">
+    <div id="menuToggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    <button class="lang" onclick="toggleDarkMode()" title="Dark Mode"><i class="fas fa-moon"></i></button>
+    <button class="lang" onclick="changeLanguage('en')">EN</button>
+    <button class="lang" onclick="changeLanguage('hi')">HI</button>
+  </div>
+</header>
+
+<nav id="mainNav">
+  <a href="#" onclick="loadHomePage()">
+<button onclick="window.open('home.html', '_blank')">Home</button>
+<button onclick="window.open('status.html', '_blank')">Status Tracker</button>
+<button onclick="window.open('posters.html', '_blank')">Posters</button>
+<button onclick="window.open('faq.html', '_blank')">DBT FAQ</button>
+<button onclick="window.open('contact.html', '_blank')">Contact</button>
+
+  </a>
+</nav>
+
+<div id="homepageSlideshow"></div>
+<div class="main" id="mainContent">
+  <!-- Banner with animated text and menu icon -->
+
+<!-- Heading for user groups -->
+<div class="user-heading">Quick Links for Different User Groups</div>
+
+<!-- User group cards -->
+<section>
+  <div class="user-groups">
+    <!-- Student -->
+    <div class="card student">
+      <div class="icon" onclick="openStudentPage()"><i class="fas fa-user-graduate"></i></div>
+      <h3>Student</h3>
+      <p>Access student resources, portals, and updates.</p>
+<button onclick="window.open('student.html', '_blank')">Go to Student</button>
+
+    </div>
+    <!-- Teacher -->
+    <div class="card teacher">
+      <div class="icon" onclick= "openTeacherPage()"><i class="fas fa-chalkboard-teacher"></i></div>
+      <h3>Teacher</h3>
+      <p>Manage classes, view notices, and resources.</p>
+      <button onclick="window.open('teacher.html','_blank')">Go to Teacher</button>
+    </div>
+    <!-- Parents -->
+    <div class="card parents">
+      <div class="icon" onclick="openParentsPage()"><i class="fas fa-user-friends"></i></div>
+      <h3>Parents</h3>
+      <p>Track child's progress and access relevant info.</p>
+      <button onclick="window.open('parents.html','_blank')">Go to Parents</button>
+    </div>
+    <!-- Admin -->
+    <div class="card admin">
+      <div class="icon" onclick="openAdminPage('admin')"><i class="fas fa-user-shield"></i></div>
+      <h3>Admin</h3>
+      <p>Admin dashboard and management tools.</p>
+      <button onclick="window.open('admin.html','_blank')">Go to Admin</button>
+    </div>
+  </div>
+</section>
+
+<!-- Main content area -->
+<div id="mainContent">
+  <h2>Disclaimer</h2>
+  <p>This is a website which gives you information about your DBT status and adhaar.
+    <br>If information given by our site is not correct then we are not responsible for any consequences. </p>
+</div>
+</div>
+
+<div>
+  <button id="whatsappBtn" title="Help via WhatsApp" onclick="redirectWhatsApp()">
+    <i class="fab fa-whatsapp"></i>
+  </button>
+  <button id="chatbotBtn" title="Chat with AI" onclick="toggleChat()">
+    <i class="fas fa-robot"></i>
+  </button>
+</div>
+
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header"><span>AI Chatbot</span><button class="close-btn" onclick="toggleChat()"><i class="fas fa-times"></i></button></div>
+  <div class="chat-body" id="chatBody"></div>
+  <input class="chat-input" id="chatInput" placeholder="Type your message" onkeydown="if(event.key==='Enter'){sendChatMessage();}">
+</div>
+
+<div class="chat-window" id="whatsappWindow">
+  <div class="chat-header"><span>WhatsApp Help Desk</span><button class="close-btn" onclick="toggleWhatsApp()"><i class="fas fa-times"></i></button></div>
+  <div class="chat-body" id="whatsappBody"><p>Hi! How can we assist you today?</p></div>
+  <input class="chat-input" id="whatsappInput" placeholder="Type your message" onkeydown="if(event.key==='Enter'){sendWhatsAppMessage();}">
+</div>
+
+<footer>
+  <div class="footer-column">
+    <h3>About</h3>
+    <p>This portal provides information about DBT schemes and government services.</p>
+  </div>
+  <div class="footer-column">
+    <h3>Links</h3>
+    <a href="https://www.india.gov.in/" target="_blank">Gov of India</a>
+    <a href="https://pib.gov.in/" target="_blank">PIB</a>
+    <a href="https://www.mygov.in/" target="_blank">MyGov</a>
+    <a href="https://npci.org.in/" target="_blank">NPCI</a>
+    <a href="https://pfms.nic.in/" target="_blank">PFMS</a>
+    <a href="https://uidai.gov.in/" target="_blank">UIDAI</a>
+    <a href="https://bankwebsite.com/" target="_blank">Bank of India</a>
+  </div>
+  <div class="footer-column">
+    <h3>Contact</h3>
+    <p>Email: support@dbt.gov.in</p>
+    <p>Phone: 1800-11-4455</p>
+    <p>Hours: 9AM - 6PM</p>
+  </div>
+  <p>&copy; 2025 Govt of India | DBT Awareness Portal</p>
+
+
+
+<div>
+  <!-- WhatsApp Button -->
+  <button id="whatsappBtn" title="Help via WhatsApp" 
+    onclick="window.open('whatsapp.html','_blank')">
+    <i class="fab fa-whatsapp"></i>
+  </button>
+
+  <!-- Chatbot Button -->
+  <button id="chatbotBtn" title="Chat with AI" 
+    onclick="window.open('chatbot.html','_blank')">
+    <i class="fas fa-robot"></i>
+  </button>
+</div>
+
+
+
+
+</footer>
+
+     <script>
+  // Your existing scripts...
+
+  // Example: toggleDarkMode, toggleMenu, openPage, etc.
+
+  // Your existing functions...
+
+  // Note: No change needed here for background, as we set it via CSS
+
+
+  function openStudentPage() {
+  window.open('student.html', '_blank');
+}
+ 
+</script>
+
+</body>
+</html>

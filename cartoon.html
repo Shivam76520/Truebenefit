@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartoons for You</title>
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#f9f9f9; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#ffcc00; }
+    header h1 { margin:0; font-size:24px; }
+    .search-box { display:flex; align-items:center; gap:8px; }
+    .search-box input { padding:8px 12px; border:none; border-radius:20px; outline:none; width:250px; }
+    .search-box button { padding:8px 14px; border:none; border-radius:20px; background:#333; color:white; cursor:pointer; }
+    .coin-counter { background:#388e3c; color:white; padding:6px 15px; border-radius:20px; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.3); }
+    .container { display:flex; padding:20px; gap:20px; }
+    .main-video { flex:2.5; }
+    .main-video iframe { width:100%; height:420px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.2); }
+    .video-info { background:#fff; margin-top:15px; padding:15px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    .video-info h2 { margin:0 0 10px; font-size:20px; }
+    .video-info p { margin:0; font-size:14px; color:#444; }
+    .recommended { flex:1; max-height:80vh; overflow-y:auto; }
+    .video { display:flex; gap:10px; margin-bottom:15px; cursor:pointer; padding:5px; border-radius:8px; transition:background 0.2s; }
+    .video:hover { background:#f1f1f1; }
+    .video img { width:140px; height:90px; border-radius:8px; object-fit:cover; }
+    .video-details h4 { margin:0; font-size:14px; color:#000; }
+    .video-details p { margin:4px 0 0; font-size:12px; color:#777; }
+    /* +2 Coins Animation */
+    .coin-animation { position:fixed; top:60px; right:40px; font-size:20px; font-weight:bold; color:gold; opacity:1; animation:floatUp 4s forwards; }
+    @keyframes floatUp { 0%{transform:translateY(0);opacity:1;} 100%{transform:translateY(-100px);opacity:0;} }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🎬 Cartoons for You</h1>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search cartoons...">
+      <button onclick="searchVideos()">Search</button>
+    </div>
+    <div class="coin-counter">💰 Coins: <span id="coinCount">0</span></div>
+  </header>
+
+  <div class="container">
+    <!-- Main Video -->
+    <div class="main-video">
+      <iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
+      <div class="video-info">
+        <h2 id="videoTitle">Select a video</h2>
+        <p id="videoDesc">Click on any video from the right side to play and earn coins.</p>
+      </div>
+    </div>
+
+    <!-- Recommended Videos -->
+    <div class="recommended" id="videoList"></div>
+  </div>
+
+  <script>
+    const API_KEY = "AIzaSyC0yI9hOpf5iysWuGl1uVdAPpT7F3ZFC_4"; // ⚠️ apna YouTube Data API key daalna
+    let coins = 0;
+
+    // ✅ Search from YouTube
+    async function searchVideos() {
+      const query = document.getElementById("searchInput").value.trim();
+      if (!query) return alert("Enter a search term!");
+
+      const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(query)}&key=${API_KEY}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const results = data.items.map(item => ({
+        id: item.id.videoId,
+        title: item.snippet.title,
+        desc: item.snippet.description,
+        thumb: item.snippet.thumbnails.medium.url
+      }));
+
+      loadVideos(results);
+    }
+
+    // ✅ Load video cards
+    function loadVideos(list) {
+      const videoList = document.getElementById("videoList");
+      videoList.innerHTML = "";
+      list.forEach(v => {
+        const div = document.createElement("div");
+        div.className = "video";
+        div.innerHTML = `
+          <img src="${v.thumb}">
+          <div class="video-details">
+            <h4>${v.title}</h4>
+            <p>${v.desc}</p>
+          </div>
+        `;
+        div.onclick = () => changeVideo(v.id, v.title, v.desc);
+        videoList.appendChild(div);
+      });
+    }
+
+    // ✅ Play selected video
+    function changeVideo(id, title, desc) {
+      document.getElementById("player").src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      document.getElementById("videoTitle").innerText = title;
+      document.getElementById("videoDesc").innerText = desc;
+      addCoins(2);
+    }
+
+    // ✅ Add coins
+    function addCoins(amount) {
+      coins += amount;
+      document.getElementById("coinCount").innerText = coins;
+
+      let anim = document.createElement("div");
+      anim.className = "coin-animation";
+      anim.innerText = `+${amount} Coins`;
+      document.body.appendChild(anim);
+
+      setTimeout(() => anim.remove(), 4000);
+    }
+  </script>
+
+</body>
+</html>

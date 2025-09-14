@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard</title>
+  <style>
+    body { font-family: Arial; background:#e3f2fd; text-align:center; padding:40px; }
+    h1 { color:#1565c0; margin-bottom:30px; }
+    .btn {
+      display:block; width:250px; margin:15px auto; padding:15px;
+      font-size:18px; color:#fff; border:none; border-radius:8px; cursor:pointer;
+      transition:0.3s;
+    }
+    .btn:hover{transform:scale(1.05);}
+    .status{background:#43a047;} 
+    .upload{background:#00897b;} 
+    .reports{background:#1976d2;} 
+    .toolkit{background:#f57c00;} 
+    .support{background:#c2185b;} 
+    .back{background:#333; margin-top:30px;}
+  </style>
+</head>
+<body>
+  <h1>📘 Teacher Dashboard</h1>
+  
+  <!-- Dashboard Buttons -->
+  <button class="btn status" onclick="window.location.href='teacher-status.html'">✔ Check Student Status</button>
+  <button class="btn upload" onclick="window.location.href='teacher-upload.html'">📤 Upload Student Data</button>
+  <button class="btn reports" onclick="window.location.href='teacher-reports.html'">📊 Reports & Analytics</button>
+  <button class="btn toolkit" onclick="window.location.href='teacher-toolkit.html'">📑 Awareness Toolkit</button>
+  <button class="btn support" onclick="window.location.href='teacher-support.html'">💬 Help & Support</button>
+  
+  <!-- Back to Home -->
+  <button class="btn back" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check DBT Status</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f8e9;
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      overflow-x: hidden;
+      
+    }
+    .container {
+  text-align: center;
+  margin-top: 60px;   /* heading aur box dono thoda neeche aayenge */
+}
+
+.container h2 {
+  margin-bottom: 20px;  /* heading ke neeche space */
+}
+
+.box {
+  margin: 0 auto;        /* box ko center align */
+  width: 350px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+    .box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 350px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #388e3c;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+    #result { margin-top: 20px; font-size: 18px; }
+
+    /* Coin text (for +2 / +5) */
+    .coin-text {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 38px;
+      font-weight: bold;
+      color: gold;
+      opacity: 0;
+      animation: coinAnim 4s forwards;
+    }
+    @keyframes coinAnim {
+      0% { opacity: 0; transform: translate(-50%, 0px) scale(0.8); }
+      20% { opacity: 1; transform: translate(-50%, 20px) scale(1.2); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -40px) scale(0.8); }
+    }
+
+    /* Parent notification popup */
+    .popup {
+      position: fixed;
+      bottom: 60px;
+      right: 20px;
+      background: #333;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      opacity: 0;
+      animation: popupAnim 4s forwards;
+    }
+    @keyframes popupAnim {
+      0% { opacity: 0; transform: translateY(30px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(30px); }
+    }
+
+    /* Bomb blast animation */
+    .blast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, orange 0%, red 60%, transparent 100%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      animation: blastAnim 1s ease-out forwards;
+      z-index: 1000;
+    }
+    @keyframes blastAnim {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+    }
+
+    /* Fireworks animation */
+    .firework {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: transparent;
+      border-radius: 50%;
+      animation: explode 1s ease-out forwards;
+      z-index: 1000;
+    }
+    @keyframes explode {
+      from { transform: scale(0); opacity: 1; }
+      to { transform: scale(20); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+ <body>
+  <div class="container">
+    <h2>🔎 Check My DBT Status</h2>
+
+    <div class="box">
+      <input type="text" id="roll" placeholder="Enter Roll Number"><br>
+      <input type="text" id="school" placeholder="Enter School Code"><br>
+      <button onclick="checkStatus()">Check Status</button>
+      <div id="result"></div>
+    </div>
+  </div>
+</body>
+
+
+  <script>
+    function checkStatus() {
+      let roll = document.getElementById("roll").value;
+      let school = document.getElementById("school").value;
+      let result = document.getElementById("result");
+
+      // Example condition: agar roll=1234 & school=101 hai to DBT enabled
+      if (roll === "1234" && school === "101") {
+        result.innerHTML = "✅ DBT Enabled 🎉";
+        
+        // Fireworks animation
+        for (let i = 0; i < 10; i++) {
+          let firework = document.createElement("div");
+          firework.className = "firework";
+          firework.style.left = (50 + (Math.random()*40-20)) + "%";
+          firework.style.top = (50 + (Math.random()*40-20)) + "%";
+          firework.style.background = ["red","yellow","blue","green","purple"][Math.floor(Math.random()*5)];
+          document.body.appendChild(firework);
+          setTimeout(()=> firework.remove(), 1000);
+        }
+
+        // +5 Coins text
+        let coin = document.createElement("div");
+        coin.className = "coin-text";
+        coin.innerText = "+5 Coins";
+        document.body.appendChild(coin);
+        setTimeout(()=> coin.remove(), 4000);
+
+        // Parent notification popup
+        let popup = document.createElement("div");
+        popup.className = "popup";
+        popup.innerText = "📩 Notified to Parents (WhatsApp/SMS)";
+        document.body.appendChild(popup);
+        setTimeout(()=> popup.remove(), 4000);
+
+      } else {
+        result.innerHTML = "Your DBT is Not Enabled❌ ";
+
+        // Bomb blast animation
+        let blast = document.createElement("div");
+        blast.className = "blast";
+        document.body.appendChild(blast);
+        setTimeout(()=> blast.remove(), 1200);
+
+        // +2 Coins text
+        let coin = document.createElement("div");
+        coin.className = "coin-text";
+        coin.innerText = "+2 Coins";
+        document.body.appendChild(coin);
+        setTimeout(()=> coin.remove(), 5000);
+
+        // Parent notification popup
+        let popup = document.createElement("div");
+        popup.className = "popup";
+        popup.innerText = "📩 Parent Notified (WhatsApp/SMS)";
+        document.body.appendChild(popup);
+        setTimeout(()=> popup.remove(), 4000);
+      }
+      setTimeout(() => {
+    result.innerHTML = "";
+  }, 10000);
+    }
+  </script>
+</body>
+</html>

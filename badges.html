@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badges, Leaderboard & Coins</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    .flowchart {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 500px;
+      margin: auto;
+    }
+    h2 {
+      font-size: 22px;
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding-left: 20px;
+      position: relative;
+    }
+    ul::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 2px dashed #aaa;
+      height: 100%;
+    }
+    li {
+      margin: 15px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    li::before {
+      content: "▶";
+      position: absolute;
+      left: -10px;
+      color: #555;
+      font-size: 12px;
+    }
+    .emoji {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+    .box {
+      background: #f1f1f1;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .box:hover {
+      background: #fffae6;
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="flowchart">
+    <h2>🏆 Badges, Leaderboard & Coins</h2>
+    <ul>
+      <li>
+        <div class="box">🖼️ Badge Board <small>(Collected + Locked)</small></div>
+      </li>
+      <li>
+        <div class="box">🥇 Leaderboard <small>(School / Area)</small></div>
+      </li>
+      <li>
+        <div class="box">💰 Coin Wallet <small>(Piggy Bank, Mascot Customization)</small></div>
+      </li>
+    </ul>
+  </div>
+
+</body>
+</html>

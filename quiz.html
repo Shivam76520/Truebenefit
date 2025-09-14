@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quiz-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .check-btn {
+      background: #28a745;
+      color: white;
+      margin-top: 15px;
+    }
+
+    .next-btn {
+      background: #007bff;
+      color: white;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .coin-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      font-weight: bold;
+      color: gold;
+      opacity: 0;
+      pointer-events: none;
+      animation: floatUp 4s ease forwards;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
+      100% { opacity: 0; transform: translate(-50%, -50%) translateY(-100px); }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>🎮 Quiz Game</h2>
+    <p id="question" class="question"></p>
+    <div id="options" class="options"></div>
+    <button class="check-btn" onclick="checkAnswer()">Check Answer</button>
+    <button class="next-btn" onclick="nextQuestion()">Next Question</button>
+    <p id="feedback"></p>
+    <p>⭐ Badges: <span id="badges">0</span> | 💰 Coins: <span id="coins">0</span></p>
+  </div>
+
+  <div id="coinAnimation"></div>
+
+  <script>
+    const questions = [
+      { q: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"], answer: "Delhi" },
+      { q: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Venus", "Jupiter"], answer: "Mars" },
+      { q: "2 + 2 = ?", options: ["3", "4", "5", "6"], answer: "4" },
+      { q: "Who wrote 'Ramayana'?", options: ["Tulsidas", "Valmiki", "Kalidas", "Ved Vyas"], answer: "Valmiki" },
+      { q: "The largest ocean in the world?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], answer: "Pacific" },
+      { q: "Which gas do plants release during photosynthesis?", options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], answer: "Oxygen" },
+      { q: "Which is the national bird of India?", options: ["Sparrow", "Crow", "Peacock", "Parrot"], answer: "Peacock" },
+      { q: "What is H2O commonly known as?", options: ["Oxygen", "Water", "Salt", "Acid"], answer: "Water" },
+      { q: "Fastest land animal?", options: ["Tiger", "Cheetah", "Horse", "Lion"], answer: "Cheetah" },
+      { q: "How many continents are there?", options: ["5", "6", "7", "8"], answer: "7" },
+      { q: "National currency of USA?", options: ["Dollar", "Euro", "Pound", "Peso"], answer: "Dollar" },
+      { q: "Which organ pumps blood?", options: ["Liver", "Brain", "Heart", "Lungs"], answer: "Heart" },
+      { q: "Who is the father of computer?", options: ["Charles Babbage", "Newton", "Edison", "Einstein"], answer: "Charles Babbage" },
+      { q: "Which festival is known as the festival of lights?", options: ["Holi", "Diwali", "Eid", "Christmas"], answer: "Diwali" },
+      { q: "Largest planet in solar system?", options: ["Earth", "Jupiter", "Saturn", "Neptune"], answer: "Jupiter" },
+      { q: "Which is smallest state of India?", options: ["Goa", "Sikkim", "Delhi", "Tripura"], answer: "Goa" },
+      { q: "Which vitamin is from sunlight?", options: ["A", "B", "C", "D"], answer: "D" },
+      { q: "National animal of India?", options: ["Lion", "Elephant", "Tiger", "Leopard"], answer: "Tiger" },
+      { q: "Who invented the light bulb?", options: ["Newton", "Edison", "Tesla", "Faraday"], answer: "Edison" },
+      { q: "Which is the largest desert?", options: ["Sahara", "Gobi", "Thar", "Kalahari"], answer: "Sahara" }
+    ];
+
+    let currentQuestion = 0;
+    let coins = 0;
+    let badges = 0;
+    let selectedAnswer = null;
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("question").innerText = q.q;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      q.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.innerText = option;
+        btn.onclick = () => selectAnswer(option, btn);
+        optionsDiv.appendChild(btn);
+      });
+      document.getElementById("feedback").innerText = "";
+      document.querySelector(".next-btn").style.display = "none";
+      selectedAnswer = null;
+    }
+
+    function selectAnswer(option, btn) {
+      selectedAnswer = option;
+      document.querySelectorAll("#options button").forEach(b => b.style.background = "");
+      btn.style.background = "#ddd";
+    }
+
+    function checkAnswer() {
+      if (!selectedAnswer) {
+        alert("Please select an answer!");
+        return;
+      }
+
+      const correct = questions[currentQuestion].answer;
+      if (selectedAnswer === correct) {
+        document.getElementById("feedback").innerText = "✅ Correct! You earned a badge and 3 coins.";
+        badges++;
+        coins += 3;
+        document.getElementById("badges").innerText = badges;
+        document.getElementById("coins").innerText = coins;
+
+        showCoinAnimation("+3 💰");
+      } else {
+        document.getElementById("feedback").innerText = "❌ Wrong! You get retry chance and 1 coin.";
+        coins += 1;
+        document.getElementById("coins").innerText = coins;
+      }
+
+      document.querySelector(".next-btn").style.display = "block";
+    }
+
+    function showCoinAnimation(text) {
+      const popup = document.createElement("div");
+      popup.className = "coin-popup";
+      popup.innerText = text;
+      document.getElementById("coinAnimation").appendChild(popup);
+
+      setTimeout(() => {
+        popup.remove();
+      }, 4000);
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("question").innerText = "🎉 Quiz Completed!";
+        document.getElementById("options").innerHTML = "";
+        document.querySelector(".check-btn").style.display = "none";
+        document.querySelector(".next-btn").style.display = "none";
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>

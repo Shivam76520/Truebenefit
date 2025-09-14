@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e8f5e9;
+      padding: 30px;
+      margin: 0;
+    }
+    h1 {
+      color: #2e7d32;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .card {
+      background: #fff;
+      width: 230px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+      text-align: center;
+    }
+    .card:hover { transform: scale(1.05); }
+    .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+    .status { background: #388e3c; }
+    .quiz { background: #1976d2; }
+    .cartoon { background: #f57c00; }
+    .badges { background: #6a1b9a; }
+    .share { background: #d32f2f; }
+    .btn:hover { opacity: 0.9; }
+    /* Back button style (top-left) */
+    .back {
+      background: #333;
+      color: #fff;
+      padding: 10px 18px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    .back:hover { background: #555; }
+  </style>
+</head>
+<body>
+  <!-- Back button (top-left) -->
+  <button class="btn back" onclick="window.location.href='index.html'">Home</button>
+
+  <h1>🎓 Student Dashboard</h1>
+
+  <div class="dashboard">
+    <!-- 1. Check My Status -->
+    <div class="card">
+      <div class="icon"><i class="fas fa-search"></i></div>
+      <h3>Check My Status</h3>
+      <p>Check DBT status by entering Roll No & School Code.</p>
+      <button class="btn status" onclick="window.location.href='status.html'">Open</button>
+    </div>
+
+    <!-- 2. Play Quiz -->
+    <div class="card">
+      <div class="icon"><i class="fas fa-question-circle"></i></div>
+      <h3>Play Quiz</h3>
+      <p>Answer questions & earn rewards and badges.</p>
+      <button class="btn quiz" onclick="window.location.href='quiz.html'">Open</button>
+    </div>
+
+    <!-- 3. Cartoon Story -->
+    <div class="card">
+      <div class="icon"><i class="fas fa-film"></i></div>
+      <h3>Watch Cartoon Story</h3>
+      <p>Enjoy Bunty vs Pinky awareness cartoon.</p>
+      <button class="btn cartoon" onclick="window.location.href='cartoon.html'">Open</button>
+    </div>
+
+    <!-- 4. Badges -->
+    <div class="card">
+      <div class="icon"><i class="fas fa-trophy"></i></div>
+      <h3>Badges & Leaderboard</h3>
+      <p>Track your progress, badges and rank.</p>
+      <button class="btn badges" onclick="window.location.href='badges.html'">Open</button>
+    </div>
+
+    <!-- 5. Share with Parents -->
+    <div class="card">
+      <div class="icon"><i class="fas fa-share-alt"></i></div>
+      <h3>Share with Parents</h3>
+      <p>Send your DBT status and achievements.</p>
+      <button class="btn share" onclick="window.location.href='share.html'">Open</button>
+    </div>
+  </div>
+</body>
+</html>

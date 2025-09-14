@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poster Page</title>
+  <style>
+    body {
+      text-align: center;
+      background: #fdfdfd;
+    }
+    h1 {
+      color: #2e86de; /* Blue shade */
+      font-family: Arial, sans-serif;
+      margin-bottom: 20px;
+    }
+    .poster-container {
+      display: flex;
+      justify-content: center; /* center me align karega */
+      gap: 10px; /* images ke beech gap */
+      flex-wrap: wrap; /* chhoti screen par neeche aa jayegi */
+    }
+    .poster-container img {
+      max-width: 30%; /* teen image ek line me fit ho jaye */
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+    <button onclick="showSection('home')">⬅ Back to Home</button>
+  <h1>Posters About DBT & Aadhaar</h1>
+  <div class="poster-container">
+    <img src="./IMG-20250914-WA0024.jpg" alt="Poster 1" />
+    <img src="./IMG-20250914-WA0025.jpg" alt="Poster 2" />
+    <img src="./IMG-20250914-WA0026.jpg" alt="Poster 3" />
+  </div>
+</body>
+</html>
